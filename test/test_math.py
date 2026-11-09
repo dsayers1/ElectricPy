@@ -32,3 +32,8 @@ def test_funcrms_validation():
     """Validate error handling for funcrms validation."""
     with pytest.raises(ValueError):
         epmath.funcrms(lambda x: x, T=0)
+
+
+def test_convolve():
+    """Validate convolve function behavior."""
+    assert_allclose(epmath.convolve(((1,3,4),(5,6,7),(8,9))),[40,213,549,765,629,252])
