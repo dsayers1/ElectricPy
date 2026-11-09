@@ -19,7 +19,7 @@ def non_inverting(Vin=None, Vout=None, Rg=None, Rf=None):
     fourth value. All inputs default to `None`, to solve for any value, do not
     declare it as an argument and set all other inputs.
 
-    .. math:: V_{out} = \\frac{V_{in}(R_g+R_f)}{Rg}
+    .. math:: V_{out} = \frac{V_{in}(R_g+R_f)}{Rg}
 
     .. image:: https://www.basictables.com/media/non-inverting-opamp-circuit.png
 
@@ -94,7 +94,7 @@ def inverting(Vin=None, Vout=None, Rin=None, Rf=None):
     fourth value. All inputs default to `None`, to solve for any value, do not
     declare it as an argument and set all other inputs.
 
-    .. math:: V_{out} = -\\frac{V_{in}\\cdot R_f}{R_{in}}
+    .. math:: V_{out} = -\frac{V_{in}\cdot R_f}{R_{in}}
 
     .. image:: https://www.basictables.com/media/inverting-opamp-circuit.png
 
@@ -177,7 +177,7 @@ def differential(
     seventh value. All inputs default to `None`, to solve for any value, do not
     declare it as an argument and set all other inputs.
 
-    .. math:: V_{out} =-V_1 \\frac{R_f}{R_1}+V_2\\frac{R_g}{R_2+R_g}\\cdot \\frac{R_1+R_f}{R_1}
+    .. math:: V_{out} =-V_1 \frac{R_f}{R_1}+V_2\frac{R_g}{R_2+R_g}\cdot \frac{R_1+R_f}{R_1}
 
     .. image:: https://www.basictables.com/media/differential-opamp-circuit.png
 
@@ -287,7 +287,7 @@ def inverting_summing(*inputs, Vout=None, Rf=None):
     voltage or resistance, explicitly set it to 'None'. Input voltages and
     resistance arguments are positional.
 
-    .. math:: V_{out}=-R_f(\\frac{V_1}{R_1}+\\frac{V_2}{R_2}\\ldots \\frac{V_n}{R_n})
+    .. math:: V_{out}=-R_f(\frac{V_1}{R_1}+\frac{V_2}{R_2}\ldots \frac{V_n}{R_n})
 
     .. image:: https://www.basictables.com/media/inverting-summing-opamp-circuit.png
     Examples
