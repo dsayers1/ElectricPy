@@ -62,3 +62,17 @@ def test_transformertest_missing_arguments_raises() -> None:
     """Incomplete input should fail with a clear ValueError."""
     with pytest.raises(ValueError):
         machines.transformertest(Poc=100.0, Voc=200.0, Ioc=None, Psc=None, Vsc=None, Isc=None)
+
+def test_indmachvth():
+    """Verify indmachvth function behavior"""
+    assert (62.510328017994716+41.45344874316525j) == pytest.approx(machines.indmachvth(120,100,.3,.001,.4,60,True))
+
+def test_indmachzth():
+    """Verify indmachzth function behavior."""
+    assert (2842444.4516147245-1992.3561784371414j) == pytest.approx(machines.indmachzth(500,100,1,.3,.001,.4,60,True))
+
+def test_indmachpem():
+    """Verify indmachpem function behavior when Vth and Zth are not provided."""
+    assert 7.559438124024389e-05 == pytest.approx(machines.indmachpem(.2,100,Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60) )
+
+
