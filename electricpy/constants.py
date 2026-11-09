@@ -2,12 +2,13 @@
 """
 Numerical Constants for Electrical Engineering - Pi, Tau, α, etc.
 
-Defenition of all required constants and matricies for
+Definition of all required constants and matrices for
 *electricpy* module.
 """
 ################################################################################
 
 import cmath as _c
+
 import numpy as _np
 
 # Define Electrical Engineering Constants

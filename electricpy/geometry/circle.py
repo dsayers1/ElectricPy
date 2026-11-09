@@ -11,13 +11,12 @@ which are required for plotting various graphs in electrical engineering.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Generator, Tuple, Union
-import math
 
 from electricpy import geometry
 from electricpy.geometry import Line, Point
-
 
 Number = Union[int, float]
 PointLike = Union[Point, Tuple[Number, Number], list]
@@ -132,12 +131,12 @@ class Circle:
         """
         return Line.construct(p, self.center)
 
-    def is_tangent(self, l: Line, *, tol: float = 1e-9) -> bool:  # noqa: E741
+    def is_tangent(self, l: Line, *, tol: float = 1e-9) -> bool:
         """Return True if the line is tangent to the circle (within tolerance)."""
         d = l.distance(self.center)
         return _is_close(d, self.radius, rel_tol=tol, abs_tol=tol)
 
-    def is_normal(self, l: Line, *, tol: float = 1e-9) -> bool:  # noqa: E741
+    def is_normal(self, l: Line, *, tol: float = 1e-9) -> bool:
         """
         Line passes through the circle's center (within tolerance).
 
@@ -182,7 +181,7 @@ class Circle:
             mag = abs(coef)
             # Prefer integer-like display when possible
             if _is_close(mag, round(mag)):
-                mag_str = str(int(round(mag)))
+                mag_str = str(round(mag))
             else:
                 mag_str = repr(mag)
             return f"{sign}{mag_str}*{var}"
@@ -196,7 +195,7 @@ class Circle:
             sign = " + " if C > 0 else " - "
             mag = abs(C)
             if _is_close(mag, round(mag)):
-                mag_str = str(int(round(mag)))
+                mag_str = str(round(mag))
             else:
                 mag_str = repr(mag)
             parts.append(f"{sign}{mag_str}")
@@ -207,7 +206,7 @@ class Circle:
         self,
         theta_resolution: float = 0.01,
         semi: bool = False
-    ) -> Generator[Tuple[float, float], None, None]:
+    ) -> Generator[tuple[float, float], None, None]:
         """
         Yield (x,y) points along the circle as theta advances.
 
@@ -253,10 +252,10 @@ class Circle:
     # -------------------------------------------------------------------------
     def intersection(
         self,
-        other: "Circle",
+        other: Circle,
         *,
         tol: float = 1e-9
-    ) -> Union[None, Point, Tuple[Point, Point], str]:
+    ) -> None | Point | tuple[Point, Point] | str:
         """
         Return the intersection(s) of this circle with another circle.
 
@@ -335,7 +334,7 @@ class Circle:
         return (p1, p2)
 
     # Backward-compatible misspelling (kept on purpose)
-    def intersetion(self, other) -> Union[None, Point, Tuple[Point, Point], str]:
+    def intersetion(self, other) -> None | Point | tuple[Point, Point] | str:
         """Backward compatible alias for intersection()."""
         return self.intersection(other)
 

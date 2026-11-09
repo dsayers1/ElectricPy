@@ -16,8 +16,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Iterator, Tuple, Union
-
+from typing import Iterator, Union
 
 Number = Union[int, float]
 
@@ -65,7 +64,7 @@ class Point:
         yield self.x
         yield self.y
 
-    def __call__(self) -> Tuple[float, float]:
+    def __call__(self) -> tuple[float, float]:
         """Return (x, y)."""
         return (self.x, self.y)
 
@@ -75,7 +74,7 @@ class Point:
             return self.x == other.x and self.y == other.y
         return False
 
-    def is_close(self, other: "Point", *, tol: float = 1e-9) -> bool:
+    def is_close(self, other: Point, *, tol: float = 1e-9) -> bool:
         """Tolerance-based point comparison."""
         if not isinstance(other, Point):
             return False
@@ -107,7 +106,7 @@ class Line:
             raise AssertionError("Line cannot have both a and b equal to zero.")
 
     @staticmethod
-    def construct(p1: Point, p2: Point) -> "Line":
+    def construct(p1: Point, p2: Point) -> Line:
         """Construct a line from two points."""
         return line_equation(p1, p2)
 
@@ -151,7 +150,7 @@ class Line:
         """Intersection point with another line (raises if parallel)."""
         return line_intersection(self, other)
 
-    def normalized(self) -> Tuple[float, float, float]:
+    def normalized(self) -> tuple[float, float, float]:
         """
         Normalize the geometry coefficients.
 
@@ -170,7 +169,7 @@ class Line:
             a, b, c = -a, -b, -c
         return (a, b, c)
 
-    def is_close(self, other: "Line", *, tol: float = 1e-9) -> bool:
+    def is_close(self, other: Line, *, tol: float = 1e-9) -> bool:
         """Tolerance-based equality: normalized coefficients are close."""
         if not isinstance(other, Line):
             return False
@@ -263,7 +262,7 @@ def distance(p1: Point, p2: Point) -> float:
     return math.hypot(p1.x - p2.x, p1.y - p2.y)
 
 
-def section(p1: Point, p2: Point, ratio: Union[Tuple[Number, Number], float]) -> Point:
+def section(p1: Point, p2: Point, ratio: tuple[Number, Number] | float) -> Point:
     """
     Calculate the point dividing segment p1->p2.
 

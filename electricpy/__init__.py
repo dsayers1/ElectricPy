@@ -22,10 +22,10 @@ import matplotlib.pyplot as _plt
 import numpy as _np
 from scipy.integrate import quad as integrate
 
+from .constants import *
+from .constants import RHO_VALUES, De0, ILcIP, VLLcVLN, carson_r, e0, pi, u0
+from .phasors import parallelz, phasor
 from .version import NAME, VERSION
-from .constants import *  # noqa: F403, F401
-from .constants import RHO_VALUES, De0, VLLcVLN, ILcIP, carson_r, u0, pi, e0
-from .phasors import phasor, parallelz
 
 __version__ = VERSION
 
@@ -64,9 +64,12 @@ def tcycle(ncycles=1, freq=60):
         if ncycles.shape != freq.shape:
             raise ValueError("ncycles and freq must be the same shape")
 
-    elif isinstance(ncycles, list) and isinstance(freq, list):
-        if len(ncycles) != len(freq):
-            raise ValueError("ncycles and freq must be the same length")
+    elif (
+        isinstance(ncycles, list)
+        and isinstance(freq, list)
+        and len(ncycles) != len(freq)
+    ):
+        raise ValueError("ncycles and freq must be the same length")
 
     ncycles = _np.asarray(ncycles)
     freq = _np.asarray(freq)
@@ -213,6 +216,11 @@ def cprint(val, unit=None, label=None, title=None,
                 The array of values corresponding to the magnitude and angle,
                 values are returned in the form: [[ mag, ang ],...,[ mag, ang ]]
                 where the angles are evaluated in degrees.
+
+    Raises
+    ------
+    TypeError
+        If the input value is not a complex number, list, or numpy array.
 
     Examples
     --------
@@ -370,7 +378,7 @@ def cprint(val, unit=None, label=None, title=None,
         if ret:
             return ([mag, ang])
     else:
-        raise ValueError("Invalid Input Type")
+        raise TypeError("Invalid Input Type")
     return None
 
 
@@ -1768,7 +1776,7 @@ def funcfft(func, minfreq=60, maxmult=15, complex=False):
     # Determine Time from Fundamental Frequency
     T = 1 / minfreq
     # Generate time range to apply for FFT
-    t, dt = _np.linspace(0, T, NN, endpoint=False, retstep=True)
+    t, _dt = _np.linspace(0, T, NN, endpoint=False, retstep=True)
     # Evaluate FFT
     y = _np.fft.rfft(func(t)) / t.size
     # Return Complex Values
@@ -1986,12 +1994,17 @@ def harmonics(real, imag=None, dc=0, freq=60, domain=None):
                 Function object handle which can be used to
                 call the function to evaluate the harmonic
                 system at specified times.
+
+    Raises
+    ------
+    TypeError
+        If the real or imaginary components are not array-like.
     """
     # Validate Inputs
     if not isinstance(real, (list, _np.ndarray)):
-        raise ValueError("Argument *real* must be array-like.")
+        raise TypeError("Argument *real* must be array-like.")
     if imag is not None and not isinstance(imag, (list, _np.ndarray)):
-        raise ValueError("Argument *imag* must be array-like.")
+        raise TypeError("Argument *imag* must be array-like.")
     # Calculate Omega
     w = 2 * _np.pi * freq
 
@@ -2484,7 +2497,7 @@ def cosfilt(arr, Srate, domain=False):
     const = 2 / Srate
     # Iteratively Calculate
     cosf = 0
-    for _k in range(0, Srate - 1):
+    for _k in range(Srate - 1):
         slc = (ind - (Srate - 1)) + _k
         cosf += cos(_k, Srate) * arr[slc]
     # Scale
@@ -2535,7 +2548,7 @@ def sinfilt(arr, Srate, domain=False):
     const = 2 / Srate
     # Iteratively Calculate
     sinf = 0
-    for _k in range(0, Srate - 1):
+    for _k in range(Srate - 1):
         slc = (ind - (Srate - 1)) + _k
         sinf += sin(_k, Srate) * arr[slc]
     # Scale
@@ -2966,9 +2979,7 @@ def vipf(V=None, I=None, PF=1, find=''):
 
 # Define Synchronous Speed Calculator
 def syncspeed(Npol, freq=60, Hz=False, rpm=False):
-    # noqa: D401   "Synchronous" is an intentional descriptor
-    r"""
-    Synchronous Speed Calculator Function.
+    r"""Calculate the synchronous speed of an electrical machine.
 
     Simple method of calculating the synchronous speed of an induction machine
     given the number of poles in the machine's construction, and
@@ -3300,7 +3311,13 @@ def ic_555_astable(R=None, C=None, freq=None, t_high=None, t_low=None):
     raise TypeError("Not enough parameters are passed")
 
 
-def ic_555_monostable(R=None, C=None, t_high=None, t_low=None):
+def ic_555_monostable(
+    R=None,
+    C=None,
+    t_high=None,
+    # pylint: disable-next=unused-argument
+    t_low=None,
+):
     """
     555 Integrated Circuit Calculator.
 

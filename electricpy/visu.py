@@ -7,13 +7,15 @@ this module is designed to assist engineers visualize their designs.
 """
 ################################################################################
 
+from __future__ import annotations
+
 import cmath as _c
 
-import numpy as _np
 import matplotlib as _matplotlib
 import matplotlib.pyplot as _plt
+import numpy as _np
 
-from electricpy import powerset, geometry
+from electricpy import geometry, powerset
 from electricpy.geometry import Point
 from electricpy.geometry.circle import Circle
 
@@ -776,19 +778,19 @@ class PowerCircle:
     def __init__(
         self,
         power_circle_type: str,
-        power_factor: float = None,
-        Vr: complex = None,
-        Vs: complex = None,
-        Pr: float = None,
-        Qr: float = None,
-        Sr: complex = None,
-        Ps: float = None,
-        Qs: float = None,
-        Ss: complex = None,
-        A: complex = None,
-        B: complex = None,
-        C: complex = None,
-        D: complex = None,
+        power_factor: float | None = None,
+        Vr: complex | None = None,
+        Vs: complex | None = None,
+        Pr: float | None = None,
+        Qr: float | None = None,
+        Sr: complex | None = None,
+        Ps: float | None = None,
+        Qs: float | None = None,
+        Ss: complex | None = None,
+        A: complex | None = None,
+        B: complex | None = None,
+        C: complex | None = None,
+        D: complex | None = None,
     ) -> None:
         r"""Initialize the class."""
         if C is not None:
@@ -993,14 +995,14 @@ class PowerCircle:
 
 
 def receiving_end_power_circle(
-    Vr: complex = None,
-    A: complex = None,
-    B: complex = None,
-    Pr: float = None,
-    Qr: float = None,
-    Sr: complex = None,
-    power_factor: float = None,
-    Vs: complex = None,
+    Vr: complex | None = None,
+    A: complex | None = None,
+    B: complex | None = None,
+    Pr: float | None = None,
+    Qr: float | None = None,
+    Sr: complex | None = None,
+    power_factor: float | None = None,
+    Vs: complex | None = None,
 ) -> PowerCircle:
     """
     Construct Receiving End Power Circle.
@@ -1071,28 +1073,19 @@ def receiving_end_power_circle(
 
     return PowerCircle(
         "receiving",
-        **{
-            "Vr": Vr,
-            "A": A,
-            "B": B,
-            "Pr": Pr,
-            "Qr": Qr,
-            "Sr": Sr,
-            "Vs": Vs,
-            "power_factor": power_factor,
-        },
+        Vr=Vr, A=A, B=B, Pr=Pr, Qr=Qr, Sr=Sr, Vs=Vs, power_factor=power_factor,
     )
 
 
 def sending_end_power_circle(
-    Vs: complex = None,
-    B: complex = None,
-    D: complex = None,
-    Ps: float = None,
-    Qs: float = None,
-    Ss: complex = None,
-    power_factor: float = None,
-    Vr: complex = None,
+    Vs: complex | None = None,
+    B: complex | None = None,
+    D: complex | None = None,
+    Ps: float | None = None,
+    Qs: float | None = None,
+    Ss: complex | None = None,
+    power_factor: float | None = None,
+    Vr: complex | None = None,
 ) -> PowerCircle:
     """
     Construct Receiving End Power Circle.
@@ -1140,20 +1133,11 @@ def sending_end_power_circle(
 
     return PowerCircle(
         "sending",
-        **{
-            "Vr": Vr,
-            "B": B,
-            "D": D,
-            "Ps": Ps,
-            "Qs": Qs,
-            "Ss": Ss,
-            "Vs": Vs,
-            "power_factor": power_factor,
-        },
+        Vr=Vr, B=B, D=D, Ps=Ps, Qs=Qs, Ss=Ss, Vs=Vs, power_factor=power_factor,
     )
 
 
-class SeriesRLC():
+class SeriesRLC:
     r"""
     Frequency Response for an RLC (Resistive, Inductive, Capacitive) Load.
 

@@ -1,4 +1,7 @@
+"""Tests for the electricpy package initialization module."""
+
 import math
+
 import numpy as np
 import pytest
 
@@ -38,7 +41,7 @@ def test_cprint_and_phaseline():
         ep.cprint(1 + 1j, unit=123)
     with pytest.raises(ValueError):
         ep.cprint(1 + 1j, label=123)
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         ep.cprint(object())
 
     with pytest.raises(ValueError):
@@ -62,7 +65,8 @@ def test_cprint_and_phaseline():
     out = ep.phaseline(VLL=ep.phasor(1, 0), realonly=True)
     assert isinstance(out, float)
 
-    out = ep.phaseline(VLL=1, complex=True)
+    with pytest.warns(DeprecationWarning):
+        out = ep.phaseline(VLL=1, complex=True)
     assert out == pytest.approx(1 / ep.VLLcVLN)
 
 
@@ -131,13 +135,3 @@ def test_dividers_and_basic_helpers():
 
     assert ep.induction_machine_slip(1750, freq=60, poles=4) == pytest.approx(1 - (1750 / 1800))
     assert ep.led_resistor(5, Vfwd=2, Ifwd=20) == pytest.approx(3 / 20000)
-
-
-def test_electricpy_init_line_coverage_smoke():
-    """Validate electricpy init line coverage smoke behavior."""
-    path = ep.__file__
-    with open(path, "r", encoding="utf-8") as handle:
-        total_lines = len(handle.read().splitlines())
-
-    for lineno in range(1, total_lines + 1):
-        exec(compile("\n" * (lineno - 1) + "pass", path, "exec"), {})
