@@ -37,3 +37,8 @@ def test_funcrms_validation():
 def test_convolve():
     """Validate convolve function behavior."""
     assert_allclose(epmath.convolve(((1,3,4),(5,6,7),(8,9))),[40,213,549,765,629,252])
+
+def test_probdensity():
+    """Validate probdensity function behavior."""
+    assert_allclose(epmath.probdensity(lambda x: np.cos(x),[3.14,9.11,12.4],1,True),[1.5791175,1,1.89347665])
+    
