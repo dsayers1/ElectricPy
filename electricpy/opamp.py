@@ -7,7 +7,8 @@ Functions for Operational Amplifiers (OpAmps).
 
 ################################################################################
 # TODO:
-# Add gain equations?
+# Add gain equations? make for all types, add integrator and differentiator
+# functions with sympy, fpbw and slew rate calcs
 
 
 def non_inverting(Vin=None, Vout=None, Rg=None, Rf=None):
