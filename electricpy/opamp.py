@@ -306,11 +306,11 @@ def inverting_summing(*inputs, Vout=None, Rf=None):
     Parameters
     ----------
     Vout:    [int, float]
-            Output voltage, in volts. Default is None.
-    Rf:     [int, float]
-            Feedback resistor value, in ohms. Default is None.
-    *inputs [int, float]
-            Input voltages and resistances, given as pairs of unnamed arguments, V1, R1, V2, R2, ..., Vn, Rn. Voltage in volts, resistance in ohms.
+             Output voltage, in volts. Default is None.
+    Rf:      [int, float]
+             Feedback resistor value, in ohms. Default is None.
+    *inputs: [int, float]
+             Input voltages and resistances, given as pairs of unnamed arguments, V1, R1, V2, R2, ..., Vn, Rn. Voltage in volts, resistance in ohms.
 
     Returns
     -------
