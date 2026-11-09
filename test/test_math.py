@@ -42,3 +42,8 @@ def test_probdensity():
     """Validate probdensity function behavior."""
     assert_allclose(epmath.probdensity(lambda x: np.cos(x),[3.14,9.11,12.4],1,True),[1.5791175,1,1.89347665])
     
+@pytest.mark.skip(reason="Function broken, see issue #131")
+def test_rfft():
+    """Validate rfft function behavior."""
+    pass
+    
