@@ -75,4 +75,43 @@ def test_indmachpem():
     """Verify indmachpem function behavior when Vth and Zth are not provided."""
     assert 7.559438124024389e-05 == pytest.approx(machines.indmachpem(.2,100,Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60) )
 
+def test_indmachtem():
+    """Verify indmachtem function behavior when Vth and Zth are not provided."""
+    assert 0.0005346260437033408 == pytest.approx(machines.indmachtem(.2,100,2,Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60))
+
+def test_indmachpkslip():
+    """Verify indmachpkslip function behavior when Zth is not provided."""
+    assert 0.00013608595851160126 == pytest.approx(machines.indmachpkslip(100,Zth=None,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60))
+
+def test_indmachiar():
+    """Verify indmachiar function behavior when Vth and Zth are not provided."""
+    assert (0.0016287590037649317+0.004988963573695251j) == pytest.approx(machines.indmachiar(Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60))
+
+def test_indmachpktorq():
+    """Verify indmachpktorq function behavior when Vth and Zth are not provided."""
+    assert 0.00045904355720005705 == pytest.approx(machines.indmachpktorq(200,12,Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60))
+
+def test_indmachstarttorq():
+    """Verify indmachstarttorq function behavior when Vth and Zth are not provided."""
+    assert 28800.0 == pytest.approx(machines.indmachstarttorq(200,12,Vth=None,Zth=None,Vas=120,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,freq=60))
+
+#These 2 functions rely on compose() in electricpy.phasors. compose() fails
+#when passed a 1D array at "row, col = arr.shape"
+@pytest.mark.skip(reason="Function is broken.")
+def test_indmachfocratings():
+    """Verify indmachfocratings function behavior."""
+    pass
+    assert 99999999 == pytest.approx(machines.indmachfocratings(200,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5,Tem=2,wes=2))
+
+@pytest.mark.skip(reason="Function is broken.")
+def test_imfoc_control():
+    """Verify imfoc_control function behavior."""
+    pass
+    assert 99999999 == pytest.approx(machines.imfoc_control(Tem_cmd=200,LAMdr_cmd=12,wr_cmd=15,Rr=20,Rs=200,Lm=.1,Lls=.2,Llr=.2,Ls=.5,Lr=.5))
+
+def test_synmach_Eq():
+    """Verify synmach_Eq function behavior."""
+    assert (-57.52707825894962+623.172174942445j) == pytest.approx(machines.synmach_Eq(2+1j,12,.3,50,11,13))
+
+
 
